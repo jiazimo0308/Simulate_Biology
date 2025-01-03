@@ -124,10 +124,8 @@ Simulate the evolution of a biological community, where multiple populations of 
       clock.tick(60)
     pygame.quit()
 在当前窗口内展现食物。 (Display the food in the current window) 
-<div align=center>
 
-
-</div>
+![395835570-9b0142af-6637-4b8f-9d0d-2a012799c5ce](https://github.com/user-attachments/assets/59b8460f-1c52-4d3c-bf1b-6e0a8a6ee61)
 
 
 
@@ -241,7 +239,10 @@ Simulate the evolution of a biological community, where multiple populations of 
     
 ![j_i-2025-01-01-12 55 42](https://github.com/user-attachments/assets/635b9337-3335-49ae-bce6-a3052c39078e)
 </div>
-          
+
+
+
+
 
 ## 后续更新中。。。。（In the follow-up update...）
 
