@@ -259,6 +259,65 @@ Simulate the evolution of a biological community, where multiple populations of 
 ![j_i-2025-01-01-18 12 48](https://github.com/user-attachments/assets/d4bd6f63-bdfe-407a-beaa-d086430343eb)
 </div>
 
+## 4.生物个体的交配、突变与变异
+首先要产生后代，后代需要雌性与雄性交配所得到，在种群繁衍过程中要保证种群中不同的性别进行交配，雌性与雄性的健康要大于80，年龄在20到35之间，交配过后产生0到3个新个体且产生的后代性别随机，并在交配过程中加入遗传与变异的设定。其中雌性与雄性交配的条件为：  
+&emsp;&emsp;1.保证当前雌性与雄性在相同的位置  
+&emsp;&emsp;2.保证双方为不同的性别  
+&emsp;&emsp;3.保证雌性与雄性的健康值大于80   
+&emsp;&emsp;4.保证双方的年龄在20到35岁之间  
+最终产生0到3个新个体。
+
+    if self.x==other.x and self.y==other.y:#两者位置在相同位置才能进行交配
+        #个体交配条件
+        ‘’‘if (self.gender == 'male' and 10<=self.year <=35  and other.gender == 'female' and 10<=other.year<=30 and self.health>=20 and other.health>=20) or \
+            (self.gender == 'male' and 10<=self.year <=35 and other.gender == 'female' and 10<=other.year<=30 and self.health>=20 and other.health>=20):'''
+        
+        #产生新的个体
+        if self.gender!=other.gender:
+            child = BiotaInitialization.making(random.choice([0,1,2,3]),width,height)#设定随机产生后代的个数
+            print('产生'+str(len(child))+'后代')
+
+遗传变异的设定是根据其新一代的父辈个体进行设定，并在不同个体交配过程中发挥作用。根据双方父母的参数，主要在起始的健康值与天赋能力上进行变化。首先定义一个变异的概率从0%到100%的概率，假设有X的概率发生变异，若变异率大于不发生变异的概率则随机选择改变speed_base或health。
+
+    def variation(self):
+    '''变异，假设只根据双方父母的参数，主要是起始健康与天赋能力'''
+    mutation_chance = random.randint(0, 100) #变异率0%到100%
+    mutation_chance_l=40 #假设有X的概率发生变异
+    if mutation_chance >(100-mutation_chance_l):
+        if random.choice([True, False]):  #随机选择改变speed_base或health
+            self.speed_base = random.randint(0, 10)
+        else:
+            self.health = random.randint(0, 100)
+
+将两种情况加入到雌性与雄性的交配函数中，
+
+       def sex(self,other,width,height):
+        '''不同性别的进行交配，健康要大于80，年年龄20-35，产生0-3个新个体性别随机，加入遗传与变异产生后代'''
+        if self.x==other.x and self.y==other.y:#两者位置在相同位置才能进行交配
+            '''
+            if (self.gender == 'male' and 10<=self.year <=35  and other.gender == 'female' and 10<=other.year<=30 and self.health>=20 and other.health>=20) or \
+                (self.gender == 'male' and 10<=self.year <=35 and other.gender == 'female' and 10<=other.year<=30 and self.health>=20 and other.health>=20):'''
+            if self.gender!=other.gender:
+                child = BiotaInitialization.making(random.choice([0,1,2,3]),width,height)#设定随机产生后代的个数
+                print('产生'+str(len(child))+'后代')
+                #根据父母双方进行合理的突变与变异
+                children = []
+                for c in child:
+                    c.generation=max(self.generation,other.generation)+1#更新代数
+                    c.update_color()#更新颜色
+                    print('第'+str(c.generation)+'代')
+                    #遗传
+                    c.speed_base =(self.speed_base + other.speed_base) / 2 + random.randint(-2,2)# 基于父母的speed_base，再加上一些随机变化,
+                    c.health = (self.health + other.health) / 2 + random.randint(-10, 10)  # 基于父母的health，再加上一些随机变化
+                    #变异
+                    c.variation()  # 对新生物进行可能的变异
+                    c.speed_base = min(10, max(-10, c.speed_base))#确保数值在正常范围内-10～10
+                    c.health= min(100, max(0, c.health))#确保数值在正常范围内0-100
+                    children.append(c)
+                print('实际后代数'+str(len(children)))
+                return children
+
+
 ## 后续更新中。。。。（In the follow-up update...）
 
 
