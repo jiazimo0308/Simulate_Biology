@@ -130,6 +130,41 @@ Simulate the evolution of a biological community, where multiple populations of 
 
 ## 2.生物个体构建（Biological individual construction）
 
+生物体我们以种群为单位进行构建。创建List集合存放生成的种群个体，根据给定的参数生成种群中个体的数量，并根据生成的随机位置创建种群中的个体，并将创建成功的个体保存在种群List中。  
+
+种群的产生
+
+    def making(a,width,height):
+    '''a,初始个数'''
+    creaturesA = []
+    num_creaturesA = a
+    for _ in range(num_creaturesA):
+        x = random.randint(0, width)
+        y = random.randint(0, height)
+        creaturesa = living.Creature(x, y)//产生单个物种
+        creaturesA.append(creaturesa)
+    return creaturesA
+
+而后是对单个种群物种的属性定义。最基本的有种群中个体的位置，种群中个体的年龄，种群中个体的生成速度，种群中个体的天赋能力(这里的天赋能力以种群中个体移动的速度作为种群个体的天赋，移动速度越快，种群个体获得食物的概率越大)，种群个体身体健康状况，以及种群个体的性别，和种群个体代数以及每一代对应于不同的颜色。
+
+<div align=center>
+
+**种群个体属性表**
+|种群个体|属性|
+|:----:|:----:|
+|横坐标位置|x|
+|纵坐标位置|y|
+|年龄|year|
+|个体生长速度|speed_grow|
+|天赋能力|speed_base|
+|健康状况|health|
+|性别|gender|
+|是否存活|is_alive|
+|代数|generation|
+|代数对应的颜色更新|update_color()|
+</div>
+
+
 ## 后续更新中。。。。（In the follow-up update...）
 
 
