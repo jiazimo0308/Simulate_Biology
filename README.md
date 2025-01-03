@@ -125,8 +125,11 @@ Simulate the evolution of a biological community, where multiple populations of 
     pygame.quit()
 在当前窗口内展现食物。 (Display the food in the current window) 
 <div align=center>
-<img width="400" alt="截屏2024-12-15 14 15 01" src="https://github.com/user-attachments/assets/9b0142af-6637-4b8f-9d0d-2a012799c5ce" />
+
+
 </div>
+
+
 
 ## 2.生物个体构建（Biological individual construction）
 
@@ -164,7 +167,107 @@ Simulate the evolution of a biological community, where multiple populations of 
 |代数对应的颜色更新|update_color()|
 </div>
 
+当个体吃到食物时此时个体的健康值加一
+
+     def food1(self,food):
+        self.health=self.health+food #根据食物更新健康状态
+
+伴随着年龄每秒（年）钟生长1岁，自然条件下健康值每秒（年）自然下降1，行动速度为物种捕猎能力，能力由天赋与后天形成，整体受到年龄，健康状态，食物有关，当100岁或健康值为0时此生物死亡。因此随着年龄的变化所导致的其他属性的变化就由定义的years()函数进行确定。
+
+      def years(self):
+      
+        '''年龄每秒（年）钟生长1岁，自然条件下健康值每秒（年）自然下降1，
+        行动速度为物种捕猎能力，能力由天赋与后天形成，整体受到年龄，健康状态，
+        食物有关，当100岁或健康值为0时此生物死亡'''
+        
+        self.year += 1 #假设自然状态下，每秒（年）年龄增加1
+        self.health-=1  #假设自然状态下，健康值随每年下降1
+        
+        # 行动速度(与年龄，健康状态，食物有关)
+
+        在这里normal_distribution是定义了一个正太函数，其中正太函数为
+        def normal_distribution(x, mu, sigma):
+            return (1 / (sigma * np.sqrt(2 * np.pi))) * np.exp(-(x - mu) ** 2 / (2 * sigma ** 2))
+            
+        updata_speed=normal_distribution(self.year, 50, 10)*100 #假设50岁时能力达到最大
+        self.speed=self.speed_base*updata_speed*self.health
+        self.speed=int(max(0,min(50,self.speed))) #更新物种个体的速度值
+        
+        #根据物种个体的速度值更新物种个体下一个前进的随机方向
+        self.x += random.randint(-self.speed, self.speed)
+        self.y += random.randint(-self.speed, self.speed)
+
+        #当健康值为0或年龄到达100岁时改变物种个体存在的状态
+        if self.year==100 or self.health==0:
+            self.is_alive=False
+通过环境构建展现到整体运行架构。(The overall operation architecture is displayed through environmental construction.)  
+    
+    #!/usr/bin/env python
+    # -*- coding: utf-8 -*-            
+    # @Author : Jiazimo
+    import random
+    import pygame
+    from Environment import Food
+    import BiotaInitialization
+    #初始化显示环境（pygame窗口）
+    pygame.init()
+    width,height=800,600
+    screen=pygame.display.set_mode((width,height))
+    pygame.display.set_caption('生物进化')
+    clock=pygame.time.Clock()
+    #创建生物
+    creatures = BiotaInitialization.making(20, width, height)#2为初始生物个数
+    #循环演化
+    running=True
+    while running:
+        for event in pygame.event.get():
+            if event.type==pygame.QUIT:
+                running=False
+        screen.fill((255,255,255))
+        for creature in creatures[:]:
+            if creature.is_alive:#判断生物是否已经死亡
+                creature.years()
+                #雌性与雄性进行分类
+                if creature.gender =='male':#雄性与雌性用不同的标准表示
+                    pygame.draw.rect(screen,creature.color,pygame.Rect(creature.x,creature.y,10,10))#雄性使用方形表示
+                else:
+                    pygame.draw.circle(screen, creature.color, (creature.x, creature.y), 5)#雌性使用三角表示
+        pygame.display.flip()
+        clock.tick(60)
+    pygame.quit()
+    
+在当前窗口内展现种群。  
+<div align=center>
+    
+![j_i-2025-01-01-12 55 42](https://github.com/user-attachments/assets/635b9337-3335-49ae-bce6-a3052c39078e)
+</div>
+          
 
 ## 后续更新中。。。。（In the follow-up update...）
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
