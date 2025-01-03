@@ -124,10 +124,9 @@ Simulate the evolution of a biological community, where multiple populations of 
       clock.tick(60)
     pygame.quit()
 在当前窗口内展现食物。 (Display the food in the current window) 
-
-![395835570-9b0142af-6637-4b8f-9d0d-2a012799c5ce](https://github.com/user-attachments/assets/59b8460f-1c52-4d3c-bf1b-6e0a8a6ee61)
-
-
+<div align=center>
+<img width="450" alt="截屏2025-01-03 13 20 12" src="https://github.com/user-attachments/assets/404d43ed-9e58-4c5b-b735-98a67360efbb" />
+</div>
 
 ## 2.生物个体构建（Biological individual construction）
 
@@ -189,7 +188,7 @@ Simulate the evolution of a biological community, where multiple populations of 
             
         updata_speed=normal_distribution(self.year, 50, 10)*100 #假设50岁时能力达到最大
         self.speed=self.speed_base*updata_speed*self.health
-        self.speed=int(max(0,min(50,self.speed))) #更新物种个体的速度值
+        self.speed=int(max(0,min(50,self.speed))) #更新物种个体的速度值    
         
         #根据物种个体的速度值更新物种个体下一个前进的随机方向
         self.x += random.randint(-self.speed, self.speed)
