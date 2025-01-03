@@ -239,9 +239,25 @@ Simulate the evolution of a biological community, where multiple populations of 
 ![j_i-2025-01-01-12 55 42](https://github.com/user-attachments/assets/635b9337-3335-49ae-bce6-a3052c39078e)
 </div>
 
+## 3.生物个体与当前环境的联系
+根据上述的两个构建，现构建种群个体获取环境食物的的关系。如果当前种群个体在食物大小设定的范围之内则判定食物被种群个体所吃掉。种群个体吃掉食物使得种群个体相对应的属性参数进行更新同样对当前吃掉的食物进行属性更新，刷新食物列表，删除已经被吃掉的食物并再生成一个新的食物。如果食物一旦被吃掉就不再检查其他生物的位置。
 
+            for creature in creatures[:]:#查看生物是否在食物位置
+                if abs(creature.x-food.x)<=size and abs(creature.y-food.y)<=size: #更改食物状态，更改生物状态
+                    food.is_eaten=True #更改食物状态
+                    creature.food1(food.nutrition) #对物种个体健康值进行更新
+                    
+                    #更新食物
+                    new_food= Food(random.randint(0, width), random.randint(0, height)) #如果食物被吃掉一个则在随机位置生成一个随机大小的食物
+                    foods.append(new_food) #添加新的食物
+                    foods = [food for food in foods if not food.is_eaten] #刷新食物列表，删除已经被吃掉的食物自动删除
+                    break #退出内部循环，一旦食物被吃掉就可以不用检查其他生物的位置了
 
+在当前窗口展现种群与食物的效果
+<div align=center>
 
+![j_i-2025-01-01-18 12 48](https://github.com/user-attachments/assets/d4bd6f63-bdfe-407a-beaa-d086430343eb)
+</div>
 
 ## 后续更新中。。。。（In the follow-up update...）
 
