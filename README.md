@@ -67,6 +67,9 @@ Simulate the evolution of a biological community, where multiple populations of 
 ## 1.环境构建（Environmental construction）
 环境的构建通过最简单的方式进行，设置食物的大小，位置，以及是否被吃掉。食物属性如下表所示。  
 (The construction of the environment is carried out in the simplest way, setting the size, position, and whether the food is eaten. Food attributes are shown in the table below.)  
+
+<div align=center>
+
 **食物属性表**
 |食物|属性|
 |:----:|:----:|
@@ -74,6 +77,7 @@ Simulate the evolution of a biological community, where multiple populations of 
 |纵坐标位置|y|
 |食物大小|nutrition|
 |是否被吃掉|True/False|
+</div>
 
 环境构建（Environmental construction）
 
