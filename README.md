@@ -316,6 +316,13 @@ Simulate the evolution of a biological community, where multiple populations of 
                     children.append(c)
                 print('实际后代数'+str(len(children)))
                 return children
+在当前窗口展现整体效果  
+
+<div align=center>
+    
+https://github.com/user-attachments/assets/ea20b2d8-eae9-4aa2-8804-84194ab5f4b1
+
+</div>
 
 
 ## 后续更新中。。。。（In the follow-up update...）
